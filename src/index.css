@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Corpo e container principal */
+body {
+  @apply bg-red-700 text-black font-sans min-h-screen flex flex-col;
+}
+
+.container {
+  @apply max-w-4xl w-full mx-auto px-6 py-10 text-center flex-grow;
+}
+
+/* Cabeçalhos */
+h1 {
+  @apply text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 leading-tight;
+}
+
+h2 {
+  @apply text-2xl sm:text-3xl font-semibold mb-6;
+}
+
+/* Seções com espaçamento vertical responsivo */
+section {
+  @apply my-10 sm:my-14;
+}
+
+/* Navegação fixa no topo, responsiva */
+nav {
+  @apply fixed top-0 left-0 right-0 z-50 bg-red-700 shadow-md py-3 sm:py-4 flex justify-center gap-8 sm:gap-12 text-lg sm:text-xl font-semibold text-white;
+}
+
+nav a {
+  @apply text-white hover:underline transition;
+}
+
+/* Container principal empurrado para não ficar atrás da nav */
+body > .container {
+  padding-top: 80px; /* espaço para nav fixa */
+}
+
+/* Formulário inputs e textarea */
+form input,
+form textarea {
+  @apply w-full max-w-md p-3 border border-black rounded-md mb-5 bg-transparent text-black placeholder-black transition focus:outline-none focus:ring-2 focus:ring-black;
+}
+
+/* Botões estilizados */
+button {
+  @apply bg-black text-white font-semibold py-3 px-7 rounded-md shadow-md hover:bg-gray-800 transition;
+}
+
+/* Links dentro do conteúdo */
+a {
+  @apply text-black font-medium underline hover:text-gray-700 transition;
+}
+
+/* Mensagens de status */
+.status-message {
+  @apply mt-4 text-center font-semibold text-lg;
+}
+
+.status-message.success {
+  @apply text-green-600;
+}
+
+.status-message.error {
+  @apply text-red-600;
+}
+
+/* Ajustes para footer */
+footer {
+  @apply text-gray-800 mt-16 mb-6 text-sm sm:text-base;
+}
+
+/* Responsividade para textos e layout */
+@screen sm {
+  h1 {
+    @apply text-4xl;
+  }
+  h2 {
+    @apply text-3xl;
+  }
+  nav {
+    @apply gap-12 text-xl;
+  }
+}
+
+@screen md {
+  .container {
+    @apply px-8 py-16;
+  }
+  h1 {
+    @apply text-5xl;
+  }
+  h2 {
+    @apply text-4xl;
+  }
+}
+
+/* Suavidade na rolagem para links de navegação */
+html {
+  scroll-behavior: smooth;
+}
+/* Links do Google Maps em vermelho */
+a[href*="google"] {
+  @apply text-red-700 hover:text-red-900 transition;
+}
