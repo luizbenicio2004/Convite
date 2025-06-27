@@ -8,6 +8,19 @@ export default function App() {
   return (
     <div className="relative bg-white min-h-screen overflow-x-hidden">
 
+ {/* Flores laterais GRANDES */}
+<img
+  src="/florzinha.jpeg"
+  alt="Flor decorativa esquerda"
+  className="hidden sm:block fixed top-0 left-0 h-full w-auto pointer-events-none select-none z-0"
+/>
+<img
+  src="/florzinha.jpeg"
+  alt="Flor decorativa direita"
+  className="hidden sm:block fixed top-0 right-0 h-full w-auto pointer-events-none select-none rotate-180 z-0"
+/>
+
+
       {/* Navegação fixa */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-red-700 text-white py-3 sm:py-4 px-6 shadow-md flex justify-center gap-8 sm:gap-12 text-lg sm:text-xl font-semibold">
         <a href="#rsvp" className="flex items-center gap-2 hover:underline transition">
@@ -47,8 +60,6 @@ export default function App() {
             alt="Luiz Benicio e Gabriela Maria"
             className="w-40 h-40 mx-auto rounded-full border-4 border-vermelho object-cover mb-6"
           />
-
-          {/* Imagem da cartinha - substitua o arquivo cartinha.png na pasta public */}
           <img
             src="/cartinha.jpeg"
             alt="Cartinha do convite"
