@@ -25,20 +25,7 @@ export default function App() {
 
   return (
     <div className="relative bg-white min-h-screen overflow-x-hidden">
-
-      {/* Flores laterais - agora aparecem no mobile também */}
-      <img
-        src="/florzinha.jpeg"
-        alt="Flor decorativa esquerda"
-        className="block fixed top-0 left-0 h-full max-h-screen w-24 sm:w-auto pointer-events-none select-none z-0"
-      />
-      <img
-        src="/florzinha.jpeg"
-        alt="Flor decorativa direita"
-        className="block fixed top-0 right-0 h-full max-h-screen w-24 sm:w-auto pointer-events-none select-none rotate-180 z-0"
-      />
-
-      {/* Navegação com ref */}
+      {/* Navegação */}
       <nav
         ref={navRef}
         className="fixed top-0 left-0 right-0 z-50 bg-red-700 text-white px-6 py-4 shadow-md flex justify-center items-center gap-6 text-base sm:text-xl font-semibold"
@@ -54,17 +41,19 @@ export default function App() {
         </a>
       </nav>
 
-      {/* Padding dinâmico com base na altura real da nav */}
+      {/* Conteúdo com padding baseado na altura da nav */}
       <div style={{ paddingTop: `${navHeight}px` }} className="container relative z-10 font-serif bg-white rounded-2xl shadow-lg px-6 sm:px-10">
 
+        {/* Flor decorativa topo */}
         <div className="flex justify-center mb-6 select-none pointer-events-none">
           <img
-            src="/flor.png"
+            src="/flores.jpeg"
             alt="Decoração floral com tulipas"
             className="w-[150px] h-auto"
           />
         </div>
 
+        {/* Cabeçalho COM foto e texto de pastores */}
         <header className="mt-4 mb-10 py-6 bg-white border border-borda rounded-2xl shadow-inner text-center">
           <h1 className="text-4xl sm:text-5xl font-bold mb-2 text-vermelho">
             Luiz Benicio & Gabriela Maria
@@ -76,15 +65,14 @@ export default function App() {
           <img
             src="/foto.jpeg"
             alt="Luiz Benicio e Gabriela Maria"
-            className="w-40 h-40 mx-auto rounded-full border-4 border-vermelho object-cover mb-6"
+            className="w-40 h-40 mx-auto rounded-full border-4 border-vermelho object-cover mb-4"
           />
-          <img
-            src="/cartinha.jpeg"
-            alt="Cartinha do convite"
-            className="mx-auto max-w-md w-full object-contain mb-6"
-          />
+          <p className="text-base sm:text-lg text-vermelho italic max-w-xl mx-auto mt-2">
+            Teremos a alegria de receber a bênção dos nossos amados pastores, Eliseu Silvério e Shirley Silvério, que estarão conosco nesse dia tão especial para celebrar o amor e a fidelidade de Deus.
+          </p>
         </header>
 
+        {/* Seções */}
         <section id="rsvp" className="mb-10">
           <h2 className="text-vermelho mb-4 text-3xl sm:text-4xl font-semibold">Confirme sua Presença</h2>
           <RSVP />
@@ -100,9 +88,10 @@ export default function App() {
           <GiftList />
         </section>
 
+        {/* Flor decorativa rodapé */}
         <div className="flex justify-center mt-10 mb-6 select-none pointer-events-none">
           <img
-            src="/flor.png"
+            src="/flores.jpeg"
             alt="Decoração floral com tulipas"
             className="w-[150px] h-auto rotate-180"
           />
