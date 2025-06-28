@@ -8,18 +8,17 @@ export default function App() {
   return (
     <div className="relative bg-white min-h-screen overflow-x-hidden">
 
- {/* Flores laterais GRANDES */}
-<img
-  src="/florzinha.jpeg"
-  alt="Flor decorativa esquerda"
-  className="hidden sm:block fixed top-0 left-0 h-full w-auto pointer-events-none select-none z-0"
-/>
-<img
-  src="/florzinha.jpeg"
-  alt="Flor decorativa direita"
-  className="hidden sm:block fixed top-0 right-0 h-full w-auto pointer-events-none select-none rotate-180 z-0"
-/>
-
+      {/* Flores laterais GRANDES */}
+      <img
+        src="/florzinha.jpeg"
+        alt="Flor decorativa esquerda"
+        className="hidden sm:block fixed top-0 left-0 h-full w-auto pointer-events-none select-none z-0"
+      />
+      <img
+        src="/florzinha.jpeg"
+        alt="Flor decorativa direita"
+        className="hidden sm:block fixed top-0 right-0 h-full w-auto pointer-events-none select-none rotate-180 z-0"
+      />
 
       {/* Navegação fixa */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-red-700 text-white py-3 sm:py-4 px-6 shadow-md flex justify-center gap-8 sm:gap-12 text-lg sm:text-xl font-semibold">
@@ -34,8 +33,8 @@ export default function App() {
         </a>
       </nav>
 
-      {/* Container principal com padding para nav fixa */}
-      <div className="container relative z-10 font-serif bg-white rounded-2xl shadow-lg pt-[80px] px-6 sm:px-10">
+      {/* Conteúdo abaixo da navbar com padding no topo */}
+      <div className="pt-[100px] container relative z-10 font-serif bg-white rounded-2xl shadow-lg px-6 sm:px-10">
 
         {/* Flor decorativa no topo */}
         <div className="flex justify-center mb-6 select-none pointer-events-none">
