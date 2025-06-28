@@ -26,16 +26,16 @@ export default function App() {
   return (
     <div className="relative bg-white min-h-screen overflow-x-hidden">
 
-      {/* Flores laterais */}
+      {/* Flores laterais - agora aparecem no mobile também */}
       <img
         src="/florzinha.jpeg"
         alt="Flor decorativa esquerda"
-        className="hidden sm:block fixed top-0 left-0 h-full w-auto pointer-events-none select-none z-0"
+        className="block fixed top-0 left-0 h-full max-h-screen w-24 sm:w-auto pointer-events-none select-none z-0"
       />
       <img
         src="/florzinha.jpeg"
         alt="Flor decorativa direita"
-        className="hidden sm:block fixed top-0 right-0 h-full w-auto pointer-events-none select-none rotate-180 z-0"
+        className="block fixed top-0 right-0 h-full max-h-screen w-24 sm:w-auto pointer-events-none select-none rotate-180 z-0"
       />
 
       {/* Navegação com ref */}
