@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Location() {
   return (
-    <div className="border border-terracota p-6 rounded-md max-w-full md:max-w-xl mx-auto">
+    <div className="border border-red-700 p-6 rounded-md max-w-full md:max-w-xl mx-auto">
       <h2 className="text-3xl font-semibold mb-4 text-terracota text-center">📍 Local da Cerimônia e Festa</h2>
       <p className="text-center font-medium mb-1">Foto Fest</p>
       <p className="text-center mb-4">Rua Tereza, 489, Calmon Viana - Poá, SP</p>

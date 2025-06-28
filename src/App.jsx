@@ -42,8 +42,10 @@ export default function App() {
       </nav>
 
       {/* Conteúdo com padding baseado na altura da nav */}
-      <div style={{ paddingTop: `${navHeight}px` }} className="container relative z-10 font-serif bg-white rounded-2xl shadow-lg px-6 sm:px-10">
-
+      <div
+        style={{ paddingTop: `${navHeight}px` }}
+        className="container relative z-10 font-serif bg-white rounded-2xl shadow-lg px-6 sm:px-10"
+      >
         {/* Flor decorativa topo */}
         <div className="flex justify-center mb-6 select-none pointer-events-none">
           <img
@@ -56,9 +58,10 @@ export default function App() {
         {/* Cabeçalho COM foto e texto de pastores */}
         <header className="mt-4 mb-10 py-6 bg-white border border-borda rounded-2xl shadow-inner text-center">
           <h1 className="text-4xl sm:text-5xl font-bold mb-2 text-vermelho">
-            Luiz Benicio & Gabriela Maria
+            Gabriela Maria & Luiz Benicio
           </h1>
-          <p className="text-lg sm:text-xl mb-4">28 de Setembro de 2025</p>
+          <p className="text-lg sm:text-xl mb-1">28 de Setembro de 2025</p>
+          <p className="text-sm sm:text-base mt-0 mb-4">Cerimônia e Celebração às 17h</p>
           <blockquote className="italic text-vermelho text-lg max-w-md mx-auto mb-6">
             "Quanto ao nosso acordo, o SENHOR é testemunha entre mim e você para sempre"
           </blockquote>
@@ -73,19 +76,17 @@ export default function App() {
         </header>
 
         {/* Seções */}
-        <section id="rsvp" className="mb-10">
-          <h2 className="text-vermelho mb-4 text-3xl sm:text-4xl font-semibold">Confirme sua Presença</h2>
+
+        <section id="rsvp">
           <RSVP />
         </section>
 
-        <section id="local" className="mb-10">
-          <h2 className="text-vermelho mb-4 text-3xl sm:text-4xl font-semibold">Local</h2>
-          <Location />
+        <section id="presentes">
+          <GiftList />
         </section>
 
-        <section id="presentes" className="mb-10">
-          <h2 className="text-vermelho mb-4 text-3xl sm:text-4xl font-semibold">Sugestão de Presentes</h2>
-          <GiftList />
+        <section id="local">
+          <Location />
         </section>
 
         {/* Flor decorativa rodapé */}
@@ -97,7 +98,7 @@ export default function App() {
           />
         </div>
 
-        <footer className="text-center text-gray-700 text-sm sm:text-base mb-6">
+        <footer className="text-center text-black text-lg sm:text-xl mb-6">
           Com carinho, aguardamos você no nosso grande dia! 💍
         </footer>
       </div>

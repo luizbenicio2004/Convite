@@ -37,7 +37,7 @@ export default function RSVP() {
 
   return (
     <div className="bg-white text-gray-800 border border-red-600 p-8 rounded-2xl shadow-sm max-w-xl mx-auto">
-      <h2 className="text-3xl font-serif font-semibold mb-4 text-red-600">Confirmação de Presença</h2>
+      <h2>Confirmação de Presença</h2>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4 text-left">
         <label>
           Seu nome completo:
