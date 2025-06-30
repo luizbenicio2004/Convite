@@ -1,13 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 
 export default function Location() {
   const locationRef = useRef(null);
-
-  useEffect(() => {
-    if (locationRef.current) {
-      locationRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, []);
 
   return (
     <div
@@ -42,7 +36,6 @@ export default function Location() {
           referrerPolicy="no-referrer-when-downgrade"
         />
       </div>
-
     </div>
   );
 }
