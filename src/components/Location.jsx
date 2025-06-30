@@ -21,9 +21,9 @@ export default function Location() {
       <p className="text-center mb-4">
         Rua Tereza, 489, Calmon Viana - Poá, SP
       </p>
-        <p className="text-center text-sm text-red-600 font-medium my-6">
-          (Não haverá bebida alcoólica.)
-        </p>
+      <p className="text-center text-sm text-vermelho font-medium my-6">
+        (Não haverá bebida alcoólica.)
+      </p>
       <a
         href="https://www.google.com/maps/place/Foto+Fest+-+Rua+Tereza,+489,+Calmon+Viana,+Po%C3%A1+-+SP"
         target="_blank"
