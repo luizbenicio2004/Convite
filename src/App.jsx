@@ -2,6 +2,8 @@ import React, { useRef, useState, useEffect } from "react";
 import RSVP from "./components/RSVP";
 import Location from "./components/Location";
 import GiftList from "./components/GiftList";
+import Countdown from "./components/Countdown";
+import CountdownInline from "./components/CountdownInline";
 import { Gift, MapPin, Heart } from "lucide-react";
 
 export default function App() {
@@ -25,28 +27,37 @@ export default function App() {
 
   return (
     <div className="relative bg-white min-h-screen overflow-x-hidden">
-      {/* Navegação */}
+      {/* NAV CENTRALIZADA COM LINKS E CONTAGEM INLINE */}
       <nav
         ref={navRef}
-        className="fixed top-0 left-0 right-0 z-50 bg-red-700 text-white px-6 py-4 shadow-md flex justify-center items-center gap-6 text-base sm:text-xl font-semibold"
+        className="fixed top-0 left-0 right-0 z-50 bg-red-700 text-white px-4 sm:px-6 py-4 shadow-md 
+                   flex flex-col items-center text-center text-sm sm:text-base font-semibold"
       >
-        <a href="#rsvp" className="flex items-center gap-2 hover:underline transition">
-          <Heart className="w-5 h-5" /> Confirmação
-        </a>
-        <a href="#local" className="flex items-center gap-2 hover:underline transition">
-          <MapPin className="w-5 h-5" /> Local
-        </a>
-        <a href="#presentes" className="flex items-center gap-2 hover:underline transition">
-          <Gift className="w-5 h-5" /> Presentes
-        </a>
+        {/* LINKS DO MENU CENTRALIZADOS */}
+        <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 mb-1">
+          <a href="#rsvp" className="flex items-center gap-1 hover:underline transition">
+            <Heart className="w-4 h-4 sm:w-5 sm:h-5" /> Confirmação
+          </a>
+          <a href="#local" className="flex items-center gap-1 hover:underline transition">
+            <MapPin className="w-4 h-4 sm:w-5 sm:h-5" /> Local
+          </a>
+          <a href="#presentes" className="flex items-center gap-1 hover:underline transition">
+            <Gift className="w-4 h-4 sm:w-5 sm:h-5" /> Presentes
+          </a>
+        </div>
+
+        {/* CONTADOR INLINE CENTRALIZADO */}
+        <div className="text-white text-xs sm:text-sm">
+          <CountdownInline />
+        </div>
       </nav>
 
-      {/* Conteúdo com padding baseado na altura da nav */}
+      {/* CONTEÚDO AJUSTADO COM BASE NA ALTURA DO NAV */}
       <div
         style={{ paddingTop: `${navHeight}px` }}
         className="container relative z-10 font-serif bg-white rounded-2xl shadow-lg px-6 sm:px-10"
       >
-        {/* Flor decorativa topo */}
+        {/* FLOR TOPO */}
         <div className="flex justify-center mb-6 select-none pointer-events-none">
           <img
             src="/flores.jpeg"
@@ -55,7 +66,7 @@ export default function App() {
           />
         </div>
 
-        {/* Cabeçalho COM foto e texto de pastores */}
+        {/* CABEÇALHO COM FOTO E TEXTO */}
         <header className="mt-4 mb-10 py-6 bg-white border border-borda rounded-2xl shadow-inner text-center">
           <h1 className="text-4xl sm:text-5xl font-bold mb-2 text-vermelho">
             Gabriela Maria & Luiz Benicio
@@ -75,21 +86,22 @@ export default function App() {
           </p>
         </header>
 
-        {/* Seções */}
-
+        {/* SEÇÃO RSVP */}
         <section id="rsvp">
           <RSVP />
         </section>
 
+        {/* SEÇÃO PRESENTES */}
         <section id="presentes">
           <GiftList />
         </section>
 
+        {/* SEÇÃO LOCAL */}
         <section id="local">
           <Location />
         </section>
 
-        {/* Flor decorativa rodapé */}
+        {/* FLOR RODAPÉ */}
         <div className="flex justify-center mt-10 mb-6 select-none pointer-events-none">
           <img
             src="/flores.jpeg"
@@ -98,6 +110,7 @@ export default function App() {
           />
         </div>
 
+        {/* RODAPÉ FINAL */}
         <footer className="text-center text-black text-lg sm:text-xl mb-6">
           Com carinho, aguardamos você no nosso grande dia! 💍
         </footer>

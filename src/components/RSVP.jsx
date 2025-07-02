@@ -37,7 +37,29 @@ export default function RSVP() {
 
   return (
     <div className="bg-white text-gray-800 border border-red-600 p-8 rounded-2xl shadow-sm max-w-xl mx-auto">
-      <h2>Confirmação de Presença</h2>
+      <h2 className="text-2xl font-bold text-red-700 mb-2">Confirmação de Presença</h2>
+
+      {/* AVISO IMPORTANTE */}
+      <div className="flex items-start gap-2 bg-red-50 border border-red-300 text-red-700 p-3 rounded-lg text-sm mb-5">
+        <svg
+          className="w-5 h-5 mt-0.5 text-red-500 flex-shrink-0"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={2}
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M12 9v2m0 4h.01M21 12A9 9 0 1 1 3 12a9 9 0 0 1 18 0Z"
+          />
+        </svg>
+        <p>
+          Por favor, confirme sua presença até o dia{" "}
+          <span className="font-medium">10 de setembro</span>.
+        </p>
+      </div>
+
       <form onSubmit={handleSubmit} className="flex flex-col gap-4 text-left">
         <label>
           Seu nome completo:
