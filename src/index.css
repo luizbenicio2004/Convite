@@ -2,124 +2,99 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Variáveis para as cores (caso queira usar no CSS puro) */
+:root {
+  --vermelho: #C0392B;
+  --rosaClaro: #f7c6ce;
+  --branco: #ffffff;
+  --preto: #000000;
+}
+
+/* Corpo com fundo branco e texto preto */
 body {
-  @apply bg-red-700 text-white font-sans min-h-screen flex flex-col;
+  @apply bg-white text-black font-sans min-h-screen flex flex-col;
 }
 
+/* Container principal */
 .container {
-  @apply max-w-4xl w-full mx-auto px-6 py-10 text-center flex-grow bg-white text-gray-900 rounded-xl shadow-lg;
+  @apply max-w-4xl w-full mx-auto px-6 py-10 text-center flex-grow bg-white text-black rounded-xl shadow-lg border;
+  border-color: var(--rosaClaro);
 }
 
+/* Títulos com vermelho */
 h1, h2, h3, h4, h5, h6 {
-  @apply text-gray-900;
+  color: var(--vermelho);
+  font-weight: 600;
 }
 
-h1 {
-  @apply text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 leading-tight;
-}
-
-h2 {
-  @apply text-2xl sm:text-3xl font-semibold mb-6;
-}
-
-section {
-  @apply my-10 sm:my-14;
-}
-
-.border-borda {
-  @apply border border-red-700 rounded-lg bg-white bg-opacity-90 shadow-md p-6;
-}
-
+/* Navegação fixa em vermelho com texto branco */
 nav {
-  @apply fixed top-0 left-0 right-0 z-50 bg-red-700 shadow-md py-1 sm:py-2 flex justify-center gap-8 sm:gap-12 text-lg sm:text-xl font-semibold text-white;
+  @apply fixed top-0 left-0 right-0 z-50 shadow-md py-3 px-8 flex justify-center gap-10 font-semibold border-b;
+  background-color: var(--vermelho);
+  color: var(--branco);
+  border-color: var(--rosaClaro);
+  backdrop-filter: saturate(180%) blur(10px); /* leve desfoque para modernizar */
 }
 
+/* Links na navegação */
 nav a {
-  @apply text-white hover:underline transition duration-300 ease-in-out;
+  @apply text-white px-4 py-2 rounded-md transition duration-300 ease-in-out flex items-center gap-2;
+}
+nav a:hover {
+  background-color: var(--branco);
+  color: var(--vermelho);
+  box-shadow: 0 4px 8px rgb(192 57 43 / 0.3);
 }
 
-/* Links padrão em fundo claro */
+/* Links padrão */
 a {
-  @apply text-vermelho font-medium underline hover:text-vermelho-dark transition duration-300 ease-in-out;
+  @apply font-medium underline transition duration-300 ease-in-out;
+  color: var(--vermelho);
+}
+a:hover {
+  color: var(--rosaClaro);
+  text-decoration-color: var(--rosaClaro);
 }
 
-body > .container {
-  padding-top: 56px;
-}
-
-.countdown-inline {
-  @apply flex items-center gap-1 bg-red-800 px-2 py-0.5 rounded-full shadow-inner select-none text-white text-xs sm:text-sm leading-none;
-  margin-top: 0 !important;
-}
-
+/* Form inputs estilizados */
 form input,
 form textarea,
 form select {
-  @apply w-full max-w-md p-3 border border-gray-300 rounded-md mb-5 bg-transparent text-gray-900 placeholder-gray-500 transition focus:outline-none focus:ring-2 focus:ring-vermelho;
+  @apply w-full max-w-md p-3 border rounded-md mb-5 bg-transparent placeholder-gray-500 transition focus:outline-none;
+  border-color: var(--rosaClaro);
+  color: var(--preto);
+  box-shadow: none;
+}
+form input:focus,
+form textarea:focus,
+form select:focus {
+  border-color: var(--vermelho);
+  box-shadow: 0 0 8px var(--rosaClaro);
 }
 
+/* Botões */
 button {
-  @apply bg-vermelho text-white font-semibold py-3 px-7 rounded-md shadow-sm hover:shadow-md hover:bg-vermelho-dark transition duration-300 ease-in-out;
+  @apply bg-[var(--vermelho)] text-white font-semibold py-3 px-7 rounded-md shadow-sm transition duration-300 ease-in-out hover:bg-[var(--rosaClaro)] hover:text-[var(--branco)] hover:shadow-md;
+  cursor: pointer;
 }
 
+/* Status message */
 .status-message {
   @apply mt-4 text-center font-semibold text-lg;
 }
-
 .status-message.success {
   @apply text-green-600;
 }
-
 .status-message.error {
-  @apply text-red-600;
+  @apply text-[var(--vermelho)];
 }
 
+/* Rodapé */
 footer {
-  @apply text-gray-800 mt-16 mb-6 text-sm sm:text-base;
+  @apply text-black mt-16 mb-6 text-sm sm:text-base;
 }
 
-@screen sm {
-  h1 {
-    @apply text-4xl;
-  }
-  h2 {
-    @apply text-3xl;
-  }
-  nav {
-    @apply gap-12 text-xl;
-  }
-}
-
-@screen md {
-  .container {
-    @apply px-8 py-16;
-  }
-  h1 {
-    @apply text-5xl;
-  }
-  h2 {
-    @apply text-4xl;
-  }
-}
-
-@screen lg {
-  h1 {
-    @apply text-6xl;
-  }
-  h2 {
-    @apply text-5xl;
-  }
-}
-
-@screen xl {
-  .container {
-    @apply max-w-5xl;
-  }
-}
-
-html {
-  scroll-behavior: smooth;
-}
+/* Animações fadeIn e fadeSlideUp */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -130,21 +105,8 @@ html {
     transform: translateY(0);
   }
 }
-
 .animate-fadeIn {
   animation: fadeIn 0.7s ease forwards;
-}
-
-.animation-delay-200 {
-  animation-delay: 0.2s;
-}
-
-.animation-delay-400 {
-  animation-delay: 0.4s;
-}
-
-.animation-delay-600 {
-  animation-delay: 0.6s;
 }
 @keyframes fadeSlideUp {
   0% {
@@ -156,19 +118,11 @@ html {
     transform: translateY(0);
   }
 }
-
 .animate-fadeSlideUp {
   animation: fadeSlideUp 0.8s ease forwards;
 }
 
-.delay-200 {
-  animation-delay: 0.2s;
-}
-
-.delay-400 {
-  animation-delay: 0.4s;
-}
-
-.delay-600 {
-  animation-delay: 0.6s;
+/* Botão especial rosa claro para hover */
+.btn-rosa {
+  @apply bg-[var(--rosaClaro)] text-[var(--vermelho)] border border-[var(--rosaClaro)] rounded transition duration-300 ease-in-out hover:bg-[var(--vermelho)] hover:text-[var(--branco)];
 }

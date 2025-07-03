@@ -1,24 +1,22 @@
-import defaultTheme from 'tailwindcss/defaultTheme';
+import defaultTheme from "tailwindcss/defaultTheme";
 
 export default {
   content: [
-    './index.html',
-    './src/**/*.{js,jsx,ts,tsx}',
+    "./index.html",
+    "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     extend: {
       fontFamily: {
-        // Fonte serifada principal, com fallback para fonts padrão do Tailwind
-        serif: ['Playfair Display', ...defaultTheme.fontFamily.serif],
-        // Fonte sans-serif padrão do Tailwind
+        serif: ["Playfair Display", ...defaultTheme.fontFamily.serif],
         sans: defaultTheme.fontFamily.sans,
       },
       colors: {
-        // Paleta de cores personalizada para o site
-        vermelho: '#B91C1C',       // vermelho vibrante para detalhes, botões e textos
-        'vermelho-dark': '#7F1D1D', // versão mais escura para hover e estados ativos
-        borda: '#D1D5DB',          // cinza claro para bordas sutis
-        terracota: '#D9480F',      // cor terracota para detalhes secundários
+        vermelho: "#C0392B",      // vermelho forte para navegação e títulos
+        rosaClaro: "#f7c6ce",    // rosa claro para bordas e detalhes
+        rosaEscuro: "#e89ba1",   // rosa escuro para hover em botões
+        branco: "#ffffff",       // branco puro para fundos
+        preto: "#000000",        // preto para textos principais
       },
     },
   },

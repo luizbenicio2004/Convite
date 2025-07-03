@@ -13,7 +13,7 @@ export default function RSVP() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setStatus(null); // limpa status anterior
+    setStatus(null);
 
     if (!nome.trim() || !presenca) {
       setStatus({ error: true, message: "Por favor, preencha seu nome e selecione se vai comparecer." });
@@ -48,8 +48,8 @@ export default function RSVP() {
   };
 
   return (
-    <div className="max-w-xl mx-auto bg-white rounded-xl shadow-lg p-8 text-gray-900">
-      <h2 className="text-3xl font-serif font-bold text-vermelho mb-8 text-center">
+    <div className="max-w-xl mx-auto bg-white rounded-2xl shadow-xl border border-[#f7c6ce] p-10 animate-fadeSlideUp">
+      <h2 className="text-3xl font-serif font-bold text-[#C0392B] mb-8 text-center">
         Confirmação de Presença
       </h2>
 
@@ -70,7 +70,7 @@ export default function RSVP() {
             onChange={(e) => setNome(e.target.value)}
             placeholder="Digite seu nome completo"
             disabled={isSubmitting}
-            className="w-full p-3 border border-gray-300 rounded-md bg-transparent text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-vermelho transition"
+            className="w-full p-3 border border-gray-300 rounded-md bg-transparent text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C0392B] transition"
             required
           />
         </label>
@@ -81,7 +81,7 @@ export default function RSVP() {
             value={presenca}
             onChange={(e) => setPresenca(e.target.value)}
             disabled={isSubmitting}
-            className="w-full p-3 border border-gray-300 rounded-md bg-transparent text-gray-900 focus:outline-none focus:ring-2 focus:ring-vermelho transition"
+            className="w-full p-3 border border-gray-300 rounded-md bg-transparent text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#C0392B] transition"
             required
           >
             <option value="" disabled>
@@ -107,7 +107,7 @@ export default function RSVP() {
             }}
             disabled={presenca !== "Sim" || isSubmitting}
             placeholder={presenca !== "Sim" ? "Selecione 'Sim' acima para informar" : "0"}
-            className={`w-full p-3 border rounded-md bg-transparent text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-vermelho transition ${
+            className={`w-full p-3 border rounded-md bg-transparent text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C0392B] transition ${
               presenca !== "Sim" ? "border-gray-200 text-gray-400 cursor-not-allowed" : "border-gray-300"
             }`}
           />
@@ -126,7 +126,7 @@ export default function RSVP() {
                 : "Digite os nomes separados por vírgula ou linha"
             }
             disabled={presenca !== "Sim" || isSubmitting}
-            className={`w-full p-3 border rounded-md bg-transparent text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-vermelho transition resize-y ${
+            className={`w-full p-3 border rounded-md bg-transparent text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C0392B] transition resize-y ${
               presenca !== "Sim" ? "border-gray-200 text-gray-400 cursor-not-allowed" : "border-gray-300"
             }`}
             rows={3}
@@ -136,8 +136,8 @@ export default function RSVP() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className={`bg-vermelho text-white font-semibold py-3 px-8 rounded-lg shadow-md transition duration-300 ${
-            isSubmitting ? "opacity-60 cursor-not-allowed" : "hover:bg-vermelho-dark"
+          className={`bg-[#C0392B] text-white font-semibold py-3 px-8 rounded-lg shadow-md transition duration-300 ${
+            isSubmitting ? "opacity-60 cursor-not-allowed" : "hover:bg-[#992d24]"
           }`}
         >
           {isSubmitting ? "Enviando..." : "Enviar"}

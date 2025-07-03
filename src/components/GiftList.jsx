@@ -26,7 +26,7 @@ export default function GiftList() {
         <img
           src="/caixinha.jpeg"
           alt="Caixa de Presente"
-          className="mx-auto w-32 sm:w-40 rounded-xl shadow-2xl object-cover transition-transform duration-500 hover:scale-105"
+          className="mx-auto w-32 sm:w-40 rounded-xl object-cover transition-transform duration-500 hover:scale-105"
           loading="lazy"
         />
       </div>
