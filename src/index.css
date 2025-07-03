@@ -2,18 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Corpo e container principal */
 body {
-  @apply bg-red-700 text-black font-sans min-h-screen flex flex-col;
+  @apply bg-red-700 text-white font-sans min-h-screen flex flex-col;
 }
 
 .container {
-  @apply max-w-4xl w-full mx-auto px-6 py-10 text-center flex-grow;
+  @apply max-w-4xl w-full mx-auto px-6 py-10 text-center flex-grow bg-white text-gray-900 rounded-xl shadow-lg;
 }
 
-/* Cabeçalhos */
 h1, h2, h3, h4, h5, h6 {
-  @apply text-black;
+  @apply text-gray-900;
 }
 
 h1 {
@@ -24,58 +22,46 @@ h2 {
   @apply text-2xl sm:text-3xl font-semibold mb-6;
 }
 
-/* Seções com espaçamento vertical responsivo */
 section {
   @apply my-10 sm:my-14;
 }
 
-/* Classe para borda vermelha arredondada */
 .border-borda {
-  @apply border border-red-700 rounded-2xl;
+  @apply border border-red-700 rounded-lg bg-white bg-opacity-90 shadow-md p-6;
 }
 
-/* Navegação fixa no topo, responsiva, com menos padding vertical */
 nav {
-  @apply fixed top-0 left-0 right-0 z-50 bg-red-700 shadow-md py-0.5 sm:py-1 flex justify-center gap-8 sm:gap-12 text-lg sm:text-xl font-semibold text-white;
+  @apply fixed top-0 left-0 right-0 z-50 bg-red-700 shadow-md py-1 sm:py-2 flex justify-center gap-8 sm:gap-12 text-lg sm:text-xl font-semibold text-white;
 }
 
 nav a {
-  @apply text-white hover:underline transition;
+  @apply text-white hover:underline transition duration-300 ease-in-out;
 }
 
-/* Container principal empurrado para não ficar atrás da nav */
+/* Links padrão em fundo claro */
+a {
+  @apply text-vermelho font-medium underline hover:text-vermelho-dark transition duration-300 ease-in-out;
+}
+
 body > .container {
-  padding-top: 48px; /* ajustado para nav menor */
+  padding-top: 56px;
 }
 
-/* CountdownInline - estilo customizado */
 .countdown-inline {
   @apply flex items-center gap-1 bg-red-800 px-2 py-0.5 rounded-full shadow-inner select-none text-white text-xs sm:text-sm leading-none;
   margin-top: 0 !important;
 }
 
-/* Formulário inputs e textarea */
 form input,
-form textarea {
-  @apply w-full max-w-md p-3 border border-black rounded-md mb-5 bg-transparent text-black placeholder-black transition focus:outline-none focus:ring-2 focus:ring-black;
+form textarea,
+form select {
+  @apply w-full max-w-md p-3 border border-gray-300 rounded-md mb-5 bg-transparent text-gray-900 placeholder-gray-500 transition focus:outline-none focus:ring-2 focus:ring-vermelho;
 }
 
-/* Botões estilizados */
 button {
-  @apply bg-black text-white font-semibold py-3 px-7 rounded-md shadow-md hover:bg-gray-800 transition;
+  @apply bg-vermelho text-white font-semibold py-3 px-7 rounded-md shadow-sm hover:shadow-md hover:bg-vermelho-dark transition duration-300 ease-in-out;
 }
 
-/* Links dentro do conteúdo */
-a {
-  @apply text-black font-medium underline hover:text-gray-700 transition;
-}
-
-/* Links do Google Maps em vermelho */
-a[href*="google"] {
-  @apply text-red-700 hover:text-red-900 transition;
-}
-
-/* Mensagens de status */
 .status-message {
   @apply mt-4 text-center font-semibold text-lg;
 }
@@ -88,12 +74,10 @@ a[href*="google"] {
   @apply text-red-600;
 }
 
-/* Ajustes para footer */
 footer {
   @apply text-gray-800 mt-16 mb-6 text-sm sm:text-base;
 }
 
-/* Responsividade para textos e layout */
 @screen sm {
   h1 {
     @apply text-4xl;
@@ -118,7 +102,73 @@ footer {
   }
 }
 
-/* Suavidade na rolagem para links de navegação */
+@screen lg {
+  h1 {
+    @apply text-6xl;
+  }
+  h2 {
+    @apply text-5xl;
+  }
+}
+
+@screen xl {
+  .container {
+    @apply max-w-5xl;
+  }
+}
+
 html {
   scroll-behavior: smooth;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.7s ease forwards;
+}
+
+.animation-delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animation-delay-400 {
+  animation-delay: 0.4s;
+}
+
+.animation-delay-600 {
+  animation-delay: 0.6s;
+}
+@keyframes fadeSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeSlideUp {
+  animation: fadeSlideUp 0.8s ease forwards;
+}
+
+.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.delay-400 {
+  animation-delay: 0.4s;
+}
+
+.delay-600 {
+  animation-delay: 0.6s;
 }

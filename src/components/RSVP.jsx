@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../firebase";
+import { CheckCircle2, AlertTriangle } from "lucide-react";
 
 export default function RSVP() {
   const [nome, setNome] = useState("");
@@ -8,17 +9,26 @@ export default function RSVP() {
   const [quantidadeAcompanhantes, setQuantidadeAcompanhantes] = useState(0);
   const [nomesAcompanhantes, setNomesAcompanhantes] = useState("");
   const [status, setStatus] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!nome || !presenca) {
-      setStatus({ error: true, message: "Por favor, preencha seu nome e a presença." });
+    setStatus(null); // limpa status anterior
+
+    if (!nome.trim() || !presenca) {
+      setStatus({ error: true, message: "Por favor, preencha seu nome e selecione se vai comparecer." });
       return;
     }
 
+    if (quantidadeAcompanhantes < 0) {
+      setStatus({ error: true, message: "Quantidade de acompanhantes não pode ser negativa." });
+      return;
+    }
+
+    setIsSubmitting(true);
     try {
       await addDoc(collection(db, "rsvp"), {
-        nome,
+        nome: nome.trim(),
         presenca,
         quantidadeAcompanhantes: Number(quantidadeAcompanhantes),
         nomesAcompanhantes: nomesAcompanhantes.trim(),
@@ -31,96 +41,121 @@ export default function RSVP() {
       setNomesAcompanhantes("");
     } catch (error) {
       console.error("Erro ao enviar RSVP:", error);
-      setStatus({ error: true, message: "Erro ao enviar, tente novamente." });
+      setStatus({ error: true, message: "Erro ao enviar, tente novamente mais tarde." });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="bg-white text-gray-800 border border-red-600 p-8 rounded-2xl shadow-sm max-w-xl mx-auto">
-      <h2 className="text-2xl font-bold text-red-700 mb-2">Confirmação de Presença</h2>
+    <div className="max-w-xl mx-auto bg-white rounded-xl shadow-lg p-8 text-gray-900">
+      <h2 className="text-3xl font-serif font-bold text-vermelho mb-8 text-center">
+        Confirmação de Presença
+      </h2>
 
-      {/* AVISO IMPORTANTE */}
-      <div className="flex items-start gap-2 bg-red-50 border border-red-300 text-red-700 p-3 rounded-lg text-sm mb-5">
-        <svg
-          className="w-5 h-5 mt-0.5 text-red-500 flex-shrink-0"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={2}
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M12 9v2m0 4h.01M21 12A9 9 0 1 1 3 12a9 9 0 0 1 18 0Z"
-          />
-        </svg>
+      <div className="flex items-center gap-3 bg-red-50 border border-red-300 text-red-700 p-4 rounded-lg text-sm mb-8">
+        <AlertTriangle className="w-6 h-6 flex-shrink-0 text-red-500" />
         <p>
           Por favor, confirme sua presença até o dia{" "}
-          <span className="font-medium">10 de setembro</span>.
+          <span className="font-semibold">10 de setembro</span>.
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 text-left">
-        <label>
-          Seu nome completo:
+      <form onSubmit={handleSubmit} className="flex flex-col gap-6 max-w-md mx-auto">
+        <label className="block">
+          <span className="block mb-1 font-medium">Seu nome completo:</span>
           <input
             type="text"
             value={nome}
             onChange={(e) => setNome(e.target.value)}
-            className="w-full border border-red-600 rounded px-3 py-2 mt-1"
+            placeholder="Digite seu nome completo"
+            disabled={isSubmitting}
+            className="w-full p-3 border border-gray-300 rounded-md bg-transparent text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-vermelho transition"
             required
           />
         </label>
 
-        <label>
-          Vai comparecer?
+        <label className="block">
+          <span className="block mb-1 font-medium">Vai comparecer?</span>
           <select
             value={presenca}
             onChange={(e) => setPresenca(e.target.value)}
-            className="w-full border border-red-600 rounded px-3 py-2 mt-1"
+            disabled={isSubmitting}
+            className="w-full p-3 border border-gray-300 rounded-md bg-transparent text-gray-900 focus:outline-none focus:ring-2 focus:ring-vermelho transition"
             required
           >
-            <option value="">-- Selecione --</option>
+            <option value="" disabled>
+              -- Selecione --
+            </option>
             <option value="Sim">Sim</option>
             <option value="Não">Não</option>
           </select>
         </label>
 
-        <label>
-          Quantidade de acompanhantes (além de você):
+        <label className="block">
+          <span className="block mb-1 font-medium">
+            Quantidade de acompanhantes (além de você):
+          </span>
           <input
             type="number"
             min="0"
             value={quantidadeAcompanhantes}
-            onChange={(e) => setQuantidadeAcompanhantes(e.target.value)}
-            className="w-full border border-red-600 rounded px-3 py-2 mt-1"
+            onChange={(e) => {
+              const val = e.target.value;
+              if (val === "") setQuantidadeAcompanhantes(0);
+              else if (/^\d+$/.test(val)) setQuantidadeAcompanhantes(Number(val));
+            }}
+            disabled={presenca !== "Sim" || isSubmitting}
+            placeholder={presenca !== "Sim" ? "Selecione 'Sim' acima para informar" : "0"}
+            className={`w-full p-3 border rounded-md bg-transparent text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-vermelho transition ${
+              presenca !== "Sim" ? "border-gray-200 text-gray-400 cursor-not-allowed" : "border-gray-300"
+            }`}
           />
         </label>
 
-        <label>
-          Nome dos acompanhantes (se quiser informar):
+        <label className="block">
+          <span className="block mb-1 font-medium">
+            Nome dos acompanhantes (se quiser informar):
+          </span>
           <textarea
             value={nomesAcompanhantes}
             onChange={(e) => setNomesAcompanhantes(e.target.value)}
-            className="w-full border border-red-600 rounded px-3 py-2 mt-1"
-            placeholder="Digite os nomes separados por vírgula ou linha"
+            placeholder={
+              presenca !== "Sim"
+                ? "Só informe se for comparecer"
+                : "Digite os nomes separados por vírgula ou linha"
+            }
+            disabled={presenca !== "Sim" || isSubmitting}
+            className={`w-full p-3 border rounded-md bg-transparent text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-vermelho transition resize-y ${
+              presenca !== "Sim" ? "border-gray-200 text-gray-400 cursor-not-allowed" : "border-gray-300"
+            }`}
+            rows={3}
           />
         </label>
 
         <button
           type="submit"
-          className="bg-red-600 text-white py-3 rounded hover:bg-red-700 transition"
+          disabled={isSubmitting}
+          className={`bg-vermelho text-white font-semibold py-3 px-8 rounded-lg shadow-md transition duration-300 ${
+            isSubmitting ? "opacity-60 cursor-not-allowed" : "hover:bg-vermelho-dark"
+          }`}
         >
-          Enviar
+          {isSubmitting ? "Enviando..." : "Enviar"}
         </button>
       </form>
 
       {status && (
         <p
-          className={`mt-4 font-semibold ${
+          className={`mt-8 max-w-md mx-auto flex items-center justify-center gap-2 font-semibold text-lg ${
             status.error ? "text-red-600" : "text-green-600"
           }`}
+          role="alert"
         >
+          {status.error ? (
+            <AlertTriangle className="w-6 h-6" />
+          ) : (
+            <CheckCircle2 className="w-6 h-6" />
+          )}
           {status.message}
         </p>
       )}
