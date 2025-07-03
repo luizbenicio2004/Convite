@@ -1,20 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 export default function TypingParagraph() {
   const fullText = 'Contando os segundos para o momento mais especial das nossas vidas... 💖';
   const [typedText, setTypedText] = useState('');
+  const timeoutRef = useRef(null);
 
   useEffect(() => {
     setTypedText('');
     let i = 0;
+
     const type = () => {
       if (i < fullText.length) {
         setTypedText((prev) => prev + fullText.charAt(i));
         i++;
-        setTimeout(type, 40);
+        timeoutRef.current = setTimeout(type, 40);
       }
     };
+
     type();
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
   }, [fullText]);
 
   return (

@@ -34,9 +34,9 @@ section {
   @apply border border-red-700 rounded-2xl;
 }
 
-/* Navegação fixa no topo, responsiva */
+/* Navegação fixa no topo, responsiva, com menos padding vertical */
 nav {
-  @apply fixed top-0 left-0 right-0 z-50 bg-red-700 shadow-md py-3 sm:py-4 flex justify-center gap-8 sm:gap-12 text-lg sm:text-xl font-semibold text-white;
+  @apply fixed top-0 left-0 right-0 z-50 bg-red-700 shadow-md py-0.5 sm:py-1 flex justify-center gap-8 sm:gap-12 text-lg sm:text-xl font-semibold text-white;
 }
 
 nav a {
@@ -45,7 +45,13 @@ nav a {
 
 /* Container principal empurrado para não ficar atrás da nav */
 body > .container {
-  padding-top: 80px; /* espaço para nav fixa */
+  padding-top: 48px; /* ajustado para nav menor */
+}
+
+/* CountdownInline - estilo customizado */
+.countdown-inline {
+  @apply flex items-center gap-1 bg-red-800 px-2 py-0.5 rounded-full shadow-inner select-none text-white text-xs sm:text-sm leading-none;
+  margin-top: 0 !important;
 }
 
 /* Formulário inputs e textarea */

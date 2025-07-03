@@ -3,8 +3,41 @@ import RSVP from "./components/RSVP";
 import Location from "./components/Location";
 import GiftList from "./components/GiftList";
 import Countdown from "./components/Countdown";
-import CountdownInline from "./components/CountdownInline";
 import { Gift, MapPin, Heart } from "lucide-react";
+
+function CountdownInline() {
+  const weddingDate = new Date("2025-09-20T17:00:00");
+  const [timeLeft, setTimeLeft] = useState(getTimeLeft());
+
+  function getTimeLeft() {
+    const now = new Date();
+    const diff = weddingDate - now;
+    if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+    const totalSeconds = Math.floor(diff / 1000);
+    return {
+      days: Math.floor(totalSeconds / 86400),
+      hours: Math.floor((totalSeconds % 86400) / 3600),
+      minutes: Math.floor((totalSeconds % 3600) / 60),
+      seconds: totalSeconds % 60,
+    };
+  }
+
+  useEffect(() => {
+    const timer = setInterval(() => setTimeLeft(getTimeLeft()), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="countdown-inline">
+      <span role="img" aria-label="Relógio de areia" className="animate-pulse">
+        ⏳
+      </span>
+      <span>
+        {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m {timeLeft.seconds}s
+      </span>
+    </div>
+  );
+}
 
 export default function App() {
   const navRef = useRef(null);
@@ -27,46 +60,40 @@ export default function App() {
 
   return (
     <div className="relative bg-white min-h-screen overflow-x-hidden">
-      {/* NAV CENTRALIZADA COM LINKS E CONTAGEM INLINE */}
+      {/* Navegação fixa no topo, centralizada e baixa */}
       <nav
         ref={navRef}
-        className="fixed top-0 left-0 right-0 z-50 bg-red-700 text-white px-4 sm:px-6 py-4 shadow-md 
-                   flex flex-col items-center text-center text-sm sm:text-base font-semibold"
+        className="fixed top-0 left-0 right-0 z-50 bg-red-700 text-white px-4 sm:px-6 py-0.5 sm:py-1
+                   flex flex-col items-center text-center text-lg sm:text-xl font-semibold"
       >
-        {/* LINKS DO MENU CENTRALIZADOS */}
-        <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 mb-1">
-          <a href="#rsvp" className="flex items-center gap-1 hover:underline transition">
-            <Heart className="w-4 h-4 sm:w-5 sm:h-5" /> Confirmação
+        {/* Links da navegação */}
+        <div className="flex flex-wrap justify-center items-center gap-8 sm:gap-12 mb-0">
+          <a href="#rsvp" className="flex items-center gap-1 hover:underline transition leading-none">
+            <Heart className="w-5 h-5" /> Confirmação
           </a>
-          <a href="#local" className="flex items-center gap-1 hover:underline transition">
-            <MapPin className="w-4 h-4 sm:w-5 sm:h-5" /> Local
+          <a href="#local" className="flex items-center gap-1 hover:underline transition leading-none">
+            <MapPin className="w-5 h-5" /> Local
           </a>
-          <a href="#presentes" className="flex items-center gap-1 hover:underline transition">
-            <Gift className="w-4 h-4 sm:w-5 sm:h-5" /> Presentes
+          <a href="#presentes" className="flex items-center gap-1 hover:underline transition leading-none">
+            <Gift className="w-5 h-5" /> Presentes
           </a>
         </div>
 
-        {/* CONTADOR INLINE CENTRALIZADO */}
-        <div className="text-white text-xs sm:text-sm">
-          <CountdownInline />
-        </div>
+        {/* Countdown inline */}
+        <CountdownInline />
       </nav>
 
-      {/* CONTEÚDO AJUSTADO COM BASE NA ALTURA DO NAV */}
+      {/* Conteúdo principal com padding topo dinâmico */}
       <div
         style={{ paddingTop: `${navHeight}px` }}
         className="container relative z-10 font-serif bg-white rounded-2xl shadow-lg px-6 sm:px-10"
       >
-        {/* FLOR TOPO */}
+        {/* Flores topo */}
         <div className="flex justify-center mb-6 select-none pointer-events-none">
-          <img
-            src="/flores.jpeg"
-            alt="Decoração floral com tulipas"
-            className="w-[150px] h-auto"
-          />
+          <img src="/flores.jpeg" alt="Decoração floral com tulipas" className="w-[150px] h-auto" />
         </div>
 
-        {/* CABEÇALHO COM FOTO E TEXTO */}
+        {/* Cabeçalho com foto e texto */}
         <header className="mt-4 mb-10 py-6 bg-white border border-borda rounded-2xl shadow-inner text-center">
           <h1 className="text-4xl sm:text-5xl font-bold mb-2 text-vermelho">
             Gabriela Maria & Luiz Benicio
@@ -86,31 +113,28 @@ export default function App() {
           </p>
         </header>
 
-        {/* SEÇÃO RSVP */}
+        {/* Contagem regressiva principal */}
+        <Countdown />
+
+        {/* Seções */}
         <section id="rsvp">
           <RSVP />
         </section>
 
-        {/* SEÇÃO PRESENTES */}
         <section id="presentes">
           <GiftList />
         </section>
 
-        {/* SEÇÃO LOCAL */}
         <section id="local">
           <Location />
         </section>
 
-        {/* FLOR RODAPÉ */}
+        {/* Flores rodapé */}
         <div className="flex justify-center mt-10 mb-6 select-none pointer-events-none">
-          <img
-            src="/flores.jpeg"
-            alt="Decoração floral com tulipas"
-            className="w-[150px] h-auto rotate-180"
-          />
+          <img src="/flores.jpeg" alt="Decoração floral com tulipas" className="w-[150px] h-auto rotate-180" />
         </div>
 
-        {/* RODAPÉ FINAL */}
+        {/* Rodapé */}
         <footer className="text-center text-black text-lg sm:text-xl mb-6">
           Com carinho, aguardamos você no nosso grande dia! 💍
         </footer>
