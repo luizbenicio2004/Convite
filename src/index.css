@@ -2,68 +2,84 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Variáveis para as cores (caso queira usar no CSS puro) */
+/* Variáveis para as cores (para uso em CSS puro) */
 :root {
   --vermelho: #C0392B;
+  --vermelho-dark: #992d24; /* para hover e estados ativos */
   --rosaClaro: #f7c6ce;
+  --rosaEscuro: #e89ba1;
   --branco: #ffffff;
   --preto: #000000;
 }
 
-/* Corpo com fundo branco e texto preto */
+/* Corpo com fundo branco, texto preto e modo escuro */
 body {
-  @apply bg-white text-black font-sans min-h-screen flex flex-col;
+  @apply bg-white text-black font-sans min-h-screen flex flex-col dark:bg-gray-900 dark:text-white transition-colors duration-300;
 }
 
 /* Container principal */
 .container {
-  @apply max-w-4xl w-full mx-auto px-6 py-10 text-center flex-grow bg-white text-black rounded-xl shadow-lg border;
+  @apply max-w-4xl w-full mx-auto px-6 py-10 text-center flex-grow bg-white text-black rounded-3xl shadow-floral border;
   border-color: var(--rosaClaro);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Títulos com vermelho */
+/* Títulos com vermelho, fonte serifada e sombra leve */
 h1, h2, h3, h4, h5, h6 {
   color: var(--vermelho);
-  font-weight: 600;
+  font-weight: 700;
+  font-family: 'Playfair Display', serif;
+  text-shadow: 0 1px 2px rgb(192 57 43 / 0.3);
+  transition: color 0.3s ease;
 }
 
-/* Navegação fixa em vermelho com texto branco */
+/* Navegação fixa em vermelho com texto branco, blur e sombra */
 nav {
-  @apply fixed top-0 left-0 right-0 z-50 shadow-md py-3 px-8 flex justify-center gap-10 font-semibold border-b;
+  @apply fixed top-0 left-0 right-0 z-50 shadow-lg py-3 px-8 flex justify-center gap-10 font-semibold border-b backdrop-blur-md;
   background-color: var(--vermelho);
   color: var(--branco);
   border-color: var(--rosaClaro);
-  backdrop-filter: saturate(180%) blur(10px); /* leve desfoque para modernizar */
+  transition: background-color 0.3s ease;
 }
 
 /* Links na navegação */
 nav a {
-  @apply text-white px-4 py-2 rounded-md transition duration-300 ease-in-out flex items-center gap-2;
+  @apply text-white px-4 py-2 rounded-md transition-all duration-300 ease-in-out flex items-center gap-2 select-none;
+  user-select: none;
+  will-change: transform, background-color;
 }
-nav a:hover {
+nav a:hover,
+nav a:focus-visible {
   background-color: var(--branco);
   color: var(--vermelho);
-  box-shadow: 0 4px 8px rgb(192 57 43 / 0.3);
+  box-shadow: 0 4px 12px rgb(192 57 43 / 0.4);
+  outline-offset: 2px;
+  transform: scale(1.05);
 }
 
 /* Links padrão */
 a {
-  @apply font-medium underline transition duration-300 ease-in-out;
+  @apply font-medium underline underline-offset-4 transition-colors duration-300 ease-in-out;
   color: var(--vermelho);
 }
-a:hover {
+a:hover,
+a:focus-visible {
   color: var(--rosaClaro);
   text-decoration-color: var(--rosaClaro);
+  outline-offset: 2px;
 }
 
-/* Form inputs estilizados */
+/* Form inputs estilizados com foco suave */
 form input,
 form textarea,
 form select {
-  @apply w-full max-w-md p-3 border rounded-md mb-5 bg-transparent placeholder-gray-500 transition focus:outline-none;
+  @apply w-full max-w-md p-3 border rounded-md mb-5 bg-transparent placeholder-gray-400 transition focus:outline-none focus:ring-2 focus:ring-offset-1;
   border-color: var(--rosaClaro);
   color: var(--preto);
   box-shadow: none;
+  font-size: 1rem;
+  line-height: 1.5;
+  font-family: inherit;
 }
 form input:focus,
 form textarea:focus,
@@ -72,15 +88,55 @@ form select:focus {
   box-shadow: 0 0 8px var(--rosaClaro);
 }
 
-/* Botões */
-button {
-  @apply bg-[var(--vermelho)] text-white font-semibold py-3 px-7 rounded-md shadow-sm transition duration-300 ease-in-out hover:bg-[var(--rosaClaro)] hover:text-[var(--branco)] hover:shadow-md;
-  cursor: pointer;
+/* Placeholder mais legível e consistente */
+form input::placeholder,
+form textarea::placeholder {
+  @apply text-gray-400 italic;
 }
 
-/* Status message */
+/* Botões principais */
+button {
+  @apply bg-[var(--vermelho)] text-white font-semibold py-3 px-7 rounded-xl shadow-lg transition duration-300 ease-in-out flex items-center justify-center gap-2 select-none;
+  cursor: pointer;
+  user-select: none;
+  will-change: transform, background-color, box-shadow;
+}
+button:hover,
+button:focus-visible {
+  @apply bg-[var(--vermelho-dark)] shadow-xl;
+  outline-offset: 2px;
+  transform: scale(1.05);
+}
+button:active {
+  @apply scale-95;
+}
+
+/* Botão especial rosa claro para hover */
+.btn-rosa {
+  @apply bg-[var(--rosaClaro)] text-[var(--vermelho)] border border-[var(--rosaClaro)] rounded-xl px-5 py-2 shadow-md transition-all duration-300 ease-in-out select-none;
+}
+.btn-rosa:hover,
+.btn-rosa:focus-visible {
+  @apply bg-[var(--vermelho)] text-[var(--branco)] shadow-lg;
+  outline-offset: 2px;
+}
+
+/* Botão com gradiente opcional */
+.btn-gradiente {
+  @apply bg-gradient-to-r from-[var(--vermelho)] to-[var(--vermelho-dark)] text-white font-semibold px-6 py-3 rounded-full shadow-lg transition-all duration-300 ease-in-out select-none;
+}
+.btn-gradiente:hover,
+.btn-gradiente:focus-visible {
+  @apply shadow-xl scale-105;
+  outline-offset: 2px;
+}
+.btn-gradiente:active {
+  @apply scale-95;
+}
+
+/* Mensagens de status com ícones e animação */
 .status-message {
-  @apply mt-4 text-center font-semibold text-lg;
+  @apply mt-6 max-w-md mx-auto flex items-center justify-center gap-3 font-semibold text-lg animate-fadeIn select-none;
 }
 .status-message.success {
   @apply text-green-600;
@@ -91,10 +147,11 @@ button {
 
 /* Rodapé */
 footer {
-  @apply text-black mt-16 mb-6 text-sm sm:text-base;
+  @apply text-black mt-16 mb-6 text-sm sm:text-base dark:text-white select-none;
+  user-select: none;
 }
 
-/* Animações fadeIn e fadeSlideUp */
+/* Animações personalizadas */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -108,6 +165,7 @@ footer {
 .animate-fadeIn {
   animation: fadeIn 0.7s ease forwards;
 }
+
 @keyframes fadeSlideUp {
   0% {
     opacity: 0;
@@ -122,7 +180,15 @@ footer {
   animation: fadeSlideUp 0.8s ease forwards;
 }
 
-/* Botão especial rosa claro para hover */
-.btn-rosa {
-  @apply bg-[var(--rosaClaro)] text-[var(--vermelho)] border border-[var(--rosaClaro)] rounded transition duration-300 ease-in-out hover:bg-[var(--vermelho)] hover:text-[var(--branco)];
+/* Estilo decorativo para imagens florais ou efeitos suaves */
+.img-decorativa {
+  @apply rounded-xl drop-shadow-lg opacity-90 mix-blend-multiply select-none;
+  user-select: none;
+  transition: transform 0.3s ease;
+}
+.img-decorativa:hover,
+.img-decorativa:focus-visible {
+  transform: scale(1.05);
+  outline-offset: 2px;
+  cursor: pointer;
 }

@@ -5,7 +5,6 @@ import GiftList from "./components/GiftList";
 import { Gift, MapPin, Heart, CalendarDays, Menu, X } from "lucide-react";
 
 function CountdownFriendly() {
-  // ...mesmo código do CountdownFriendly
   const weddingDate = new Date("2025-09-28T17:00:00");
   const [timeLeft, setTimeLeft] = useState(getTimeLeft());
 
@@ -29,7 +28,7 @@ function CountdownFriendly() {
   }, []);
 
   return (
-    <div className="countdown-inline mt-2 max-w-[380px] mx-auto text-white font-semibold select-none">
+    <div className="countdown-inline mt-2 max-w-[380px] mx-auto text-white font-semibold select-none whitespace-nowrap">
       ⌛️{" "}
       {timeLeft.days === 0 &&
       timeLeft.hours === 0 &&
@@ -66,17 +65,21 @@ export default function App() {
     setMenuOpen(!menuOpen);
   };
 
-  // Fecha menu ao clicar em item de navegação
   const handleNavClick = () => {
     setMenuOpen(false);
   };
+
+  // Bloquear scroll no body quando menu estiver aberto
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "auto";
+  }, [menuOpen]);
 
   useEffect(() => {
     if (navRef.current) setNavHeight(navRef.current.offsetHeight);
     const handleResize = () => {
       if (navRef.current) setNavHeight(navRef.current.offsetHeight);
       if (window.innerWidth >= 768) {
-        setMenuOpen(false); // fecha menu ao aumentar tela pra desktop
+        setMenuOpen(false);
       }
     };
     window.addEventListener("resize", handleResize);
@@ -112,31 +115,30 @@ export default function App() {
   ];
 
   return (
-    <div className="min-h-screen bg-white flex justify-center items-start py-10 px-4">
+    <div className="min-h-screen bg-white flex justify-center items-start py-10 px-4 font-sans leading-relaxed">
       <div className="relative w-full max-w-4xl bg-white rounded-3xl shadow-2xl border border-[#f7c6ce] overflow-x-hidden">
-
         {/* Navegação */}
         <nav
           ref={navRef}
           className="fixed top-0 left-0 right-0 z-50 bg-[#C0392B] text-white py-3 px-4 sm:px-8 shadow-lg border-b border-[#f7c6ce] flex items-center justify-between"
         >
-          {/* Logo ou título - opcional */}
           <div className="font-semibold text-lg select-none">Nosso Casamento</div>
 
-          {/* Botão hamburguer só no mobile */}
           <button
             onClick={toggleMenu}
             className="md:hidden text-white p-2 rounded-md hover:bg-[#992d24] focus:outline-none focus:ring-2 focus:ring-white"
-            aria-label="Abrir menu"
+            aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
+            aria-expanded={menuOpen}
           >
             {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
 
-          {/* Menu desktop e mobile */}
           <div
-            className={`flex-col md:flex-row md:flex items-center gap-6 absolute md:static top-full left-0 w-full md:w-auto bg-[#C0392B] md:bg-transparent transition-transform duration-300 md:transition-none
+            className={`flex-col md:flex-row md:flex items-center gap-6 absolute md:static top-full left-0 w-full md:w-auto bg-[#C0392B] md:bg-transparent transition-transform duration-300 ease-in-out
               ${
-                menuOpen ? "translate-y-0 opacity-100" : "opacity-0 -translate-y-10 pointer-events-none md:pointer-events-auto"
+                menuOpen
+                  ? "translate-y-0 opacity-100 pointer-events-auto"
+                  : "opacity-0 -translate-y-10 pointer-events-none md:pointer-events-auto"
               }
               md:opacity-100 md:translate-y-0
             `}
@@ -146,14 +148,17 @@ export default function App() {
                 key={id}
                 href={`#${id}`}
                 onClick={handleNavClick}
-                className="flex items-center gap-2 px-4 py-2 rounded-md cursor-pointer text-white md:text-white select-none"
+                className={`flex items-center gap-2 px-4 py-2 rounded-md cursor-pointer text-white md:text-white select-none transition ${
+                  activeSection === id
+                    ? "bg-[#992d24] shadow-md"
+                    : "hover:bg-[#992d24]"
+                }`}
               >
                 <Icon className="w-5 h-5" />
                 {label}
               </a>
             ))}
 
-            {/* Countdown sempre visível */}
             <div className="mt-4 md:mt-0 md:ml-6">
               <CountdownFriendly />
             </div>
@@ -161,40 +166,44 @@ export default function App() {
         </nav>
 
         {/* Conteúdo */}
-        <main style={{ paddingTop: `${navHeight + 24}px` }} className="px-8 py-20">
-          {/* Resto do conteúdo igual */}
+        <main
+          style={{ paddingTop: `${navHeight + 24}px` }}
+          className="px-8 py-20"
+        >
           <div className="flex justify-center mb-16">
             <img
               src="/flores.jpeg"
               alt="Flores"
-              className="w-40 h-auto rounded-xl drop-shadow-lg"
-              style={{ filter: "none" }} // remove tom escuro das flores
+              className="w-40 h-auto rounded-xl drop-shadow-lg opacity-90 mix-blend-multiply"
+              style={{ filter: "none" }}
             />
           </div>
 
           <header className="text-center mb-20 animate-fadeSlideUp">
-            <h1 className="font-serif text-6xl text-[#C0392B] mb-6">Gabriela Maria & Luiz Benicio</h1>
-            <p className="text-xl text-black mb-3 font-semibold">
+            <h1 className="font-serif text-6xl text-[#C0392B] mb-6">
+              Gabriela Maria & Luiz Benicio
+            </h1>
+            <p className="text-xl text-black mb-3 font-semibold tracking-wide">
               28 de Setembro de 2025
             </p>
-            <p className="text-lg text-black mb-10 font-medium">
+            <p className="text-lg text-black mb-10 font-medium tracking-wide">
               Cerimônia e Celebração às 17h
             </p>
 
-            {/* Botão Calendário logo abaixo do horário */}
             <div className="mb-10">
               <a
                 href={calendarLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-[#C0392B] text-white px-5 py-2 rounded-full shadow-lg hover:bg-[#992d24] transition hover:scale-105"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-[#C0392B] to-[#992d24] text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-transform duration-300"
               >
                 <CalendarDays className="w-5 h-5" /> Salvar no calendário
               </a>
             </div>
 
-            <blockquote className="italic text-black text-2xl max-w-xl mx-auto mb-14 font-semibold">
-              "Quanto ao nosso acordo, o SENHOR é testemunha entre mim e você para sempre"
+            <blockquote className="italic text-black text-2xl max-w-xl mx-auto mb-14 font-semibold tracking-wide leading-relaxed">
+              "Quanto ao nosso acordo, o SENHOR é testemunha entre mim e você
+              para sempre"
             </blockquote>
 
             <img
@@ -205,22 +214,44 @@ export default function App() {
               }`}
               onClick={toggleZoom}
               title="Clique para ampliar"
+              aria-label={zoomed ? "Fechar imagem ampliada" : "Ampliar imagem"}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  toggleZoom();
+                }
+              }}
             />
 
-            <p className="text-lg italic text-gray-600 max-w-2xl mx-auto mt-10 leading-relaxed">
-              Teremos a alegria de receber a bênção dos nossos amados pastores, Eliseu Silvério e Shirley Silvério, que estarão conosco nesse dia tão especial para celebrar o amor e a fidelidade de Deus.
+            <p className="text-lg italic text-gray-600 max-w-2xl mx-auto mt-10 leading-relaxed tracking-wide">
+              Teremos a alegria de receber a bênção dos nossos amados pastores,
+              Eliseu Silvério e Shirley Silvério, que estarão conosco nesse dia
+              tão especial para celebrar o amor e a fidelidade de Deus.
             </p>
           </header>
 
-          <section id="rsvp" className="mb-28 animate-fadeSlideUp delay-200">
+          <section
+            id="rsvp"
+            className="mb-28 animate-fadeSlideUp"
+            style={{ animationDelay: "0.2s" }}
+          >
             <RSVP />
           </section>
 
-          <section id="presentes" className="mb-28 animate-fadeSlideUp delay-400">
+          <section
+            id="presentes"
+            className="mb-28 animate-fadeSlideUp"
+            style={{ animationDelay: "0.4s" }}
+          >
             <GiftList />
           </section>
 
-          <section id="local" className="mb-28 animate-fadeSlideUp delay-600">
+          <section
+            id="local"
+            className="mb-28 animate-fadeSlideUp"
+            style={{ animationDelay: "0.6s" }}
+          >
             <Location />
           </section>
 
@@ -228,21 +259,20 @@ export default function App() {
             <img
               src="/flores.jpeg"
               alt="Flores rodapé"
-              className="w-40 h-auto rounded-xl drop-shadow-lg rotate-180"
-              style={{ filter: "none" }} // remove tom escuro do rodapé também
+              className="w-40 h-auto rounded-xl drop-shadow-lg rotate-180 opacity-90 mix-blend-multiply"
+              style={{ filter: "none" }}
             />
           </div>
 
-          <footer className="text-gray-600 text-xl mb-12 font-semibold text-center">
+          <footer className="text-gray-600 text-xl mb-12 font-semibold text-center tracking-wide">
             Com carinho, aguardamos você no nosso grande dia! 💍
           </footer>
         </main>
 
-        {/* Botão voltar ao topo */}
         {showTopBtn && (
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="fixed bottom-6 right-6 bg-[#C0392B] text-white p-4 rounded-full shadow-xl hover:bg-[#992d24] transition transform hover:scale-110 active:scale-95"
+            className="fixed bottom-6 right-6 bg-gradient-to-r from-[#C0392B] to-[#992d24] text-white p-4 rounded-full shadow-xl hover:shadow-2xl transition transform hover:scale-110 active:scale-95"
             aria-label="Voltar ao topo"
             title="Voltar ao topo"
           >

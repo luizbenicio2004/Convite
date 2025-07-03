@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../firebase";
-import { CheckCircle2, AlertTriangle } from "lucide-react";
+import { CheckCircle2, AlertTriangle, Send } from "lucide-react";
 
 export default function RSVP() {
   const [nome, setNome] = useState("");
@@ -16,12 +16,18 @@ export default function RSVP() {
     setStatus(null);
 
     if (!nome.trim() || !presenca) {
-      setStatus({ error: true, message: "Por favor, preencha seu nome e selecione se vai comparecer." });
+      setStatus({
+        error: true,
+        message: "Por favor, preencha seu nome e selecione se vai comparecer.",
+      });
       return;
     }
 
     if (quantidadeAcompanhantes < 0) {
-      setStatus({ error: true, message: "Quantidade de acompanhantes não pode ser negativa." });
+      setStatus({
+        error: true,
+        message: "Quantidade de acompanhantes não pode ser negativa.",
+      });
       return;
     }
 
@@ -34,6 +40,7 @@ export default function RSVP() {
         nomesAcompanhantes: nomesAcompanhantes.trim(),
         timestamp: new Date(),
       });
+
       setStatus({ error: false, message: "Obrigado pela confirmação!" });
       setNome("");
       setPresenca("");
@@ -41,7 +48,10 @@ export default function RSVP() {
       setNomesAcompanhantes("");
     } catch (error) {
       console.error("Erro ao enviar RSVP:", error);
-      setStatus({ error: true, message: "Erro ao enviar, tente novamente mais tarde." });
+      setStatus({
+        error: true,
+        message: "Erro ao enviar, tente novamente mais tarde.",
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -49,11 +59,11 @@ export default function RSVP() {
 
   return (
     <div className="max-w-xl mx-auto bg-white rounded-2xl shadow-xl border border-[#f7c6ce] p-10 animate-fadeSlideUp">
-      <h2 className="text-3xl font-serif font-bold text-[#C0392B] mb-8 text-center">
+      <h2 className="text-3xl font-serif font-bold text-[#C0392B] mb-8 text-center select-none">
         Confirmação de Presença
       </h2>
 
-      <div className="flex items-center gap-3 bg-red-50 border border-red-300 text-red-700 p-4 rounded-lg text-sm mb-8">
+      <div className="flex items-center gap-3 bg-red-50 border border-red-300 text-red-700 p-4 rounded-lg text-sm mb-8 select-none">
         <AlertTriangle className="w-6 h-6 flex-shrink-0 text-red-500" />
         <p>
           Por favor, confirme sua presença até o dia{" "}
@@ -61,28 +71,54 @@ export default function RSVP() {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-6 max-w-md mx-auto">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-6 max-w-md mx-auto"
+        noValidate
+      >
+        {/* Nome */}
         <label className="block">
-          <span className="block mb-1 font-medium">Seu nome completo:</span>
+          <span className="block mb-1 font-medium text-gray-900">
+            Seu nome completo:
+          </span>
           <input
             type="text"
             value={nome}
             onChange={(e) => setNome(e.target.value)}
             placeholder="Digite seu nome completo"
             disabled={isSubmitting}
-            className="w-full p-3 border border-gray-300 rounded-md bg-transparent text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C0392B] transition"
+            className={`w-full p-3 border rounded-md bg-transparent text-gray-900 placeholder-gray-400 transition
+              focus:outline-none focus:ring-2 focus:ring-[#C0392B] focus:ring-offset-1
+              ${
+                status?.error && !nome.trim()
+                  ? "border-red-400"
+                  : "border-gray-300"
+              }`}
             required
+            aria-invalid={status?.error && !nome.trim()}
+            aria-describedby="nome-error"
           />
+          {status?.error && !nome.trim() && (
+            <p
+              id="nome-error"
+              className="text-sm text-red-500 mt-1 select-none"
+              role="alert"
+            >
+              Campo obrigatório
+            </p>
+          )}
         </label>
 
+        {/* Presença */}
         <label className="block">
-          <span className="block mb-1 font-medium">Vai comparecer?</span>
+          <span className="block mb-1 font-medium text-gray-900">Vai comparecer?</span>
           <select
             value={presenca}
             onChange={(e) => setPresenca(e.target.value)}
             disabled={isSubmitting}
-            className="w-full p-3 border border-gray-300 rounded-md bg-transparent text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#C0392B] transition"
+            className="w-full p-3 border border-gray-300 rounded-md bg-transparent text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#C0392B] focus:ring-offset-1 transition"
             required
+            aria-invalid={status?.error && !presenca}
           >
             <option value="" disabled>
               -- Selecione --
@@ -92,8 +128,9 @@ export default function RSVP() {
           </select>
         </label>
 
+        {/* Acompanhantes */}
         <label className="block">
-          <span className="block mb-1 font-medium">
+          <span className="block mb-1 font-medium text-gray-900">
             Quantidade de acompanhantes (além de você):
           </span>
           <input
@@ -106,15 +143,22 @@ export default function RSVP() {
               else if (/^\d+$/.test(val)) setQuantidadeAcompanhantes(Number(val));
             }}
             disabled={presenca !== "Sim" || isSubmitting}
-            placeholder={presenca !== "Sim" ? "Selecione 'Sim' acima para informar" : "0"}
-            className={`w-full p-3 border rounded-md bg-transparent text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C0392B] transition ${
-              presenca !== "Sim" ? "border-gray-200 text-gray-400 cursor-not-allowed" : "border-gray-300"
-            }`}
+            placeholder={
+              presenca !== "Sim" ? "Selecione 'Sim' acima para informar" : "0"
+            }
+            className={`w-full p-3 border rounded-md bg-transparent text-gray-900 placeholder-gray-400 transition focus:outline-none focus:ring-2 focus:ring-[#C0392B] focus:ring-offset-1
+              ${
+                presenca !== "Sim"
+                  ? "border-gray-200 text-gray-400 cursor-not-allowed"
+                  : "border-gray-300"
+              }`}
+            aria-disabled={presenca !== "Sim" || isSubmitting}
           />
         </label>
 
+        {/* Nomes dos acompanhantes */}
         <label className="block">
-          <span className="block mb-1 font-medium">
+          <span className="block mb-1 font-medium text-gray-900">
             Nome dos acompanhantes (se quiser informar):
           </span>
           <textarea
@@ -126,30 +170,49 @@ export default function RSVP() {
                 : "Digite os nomes separados por vírgula ou linha"
             }
             disabled={presenca !== "Sim" || isSubmitting}
-            className={`w-full p-3 border rounded-md bg-transparent text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C0392B] transition resize-y ${
-              presenca !== "Sim" ? "border-gray-200 text-gray-400 cursor-not-allowed" : "border-gray-300"
-            }`}
             rows={3}
+            className={`w-full p-3 border rounded-md bg-transparent text-gray-900 placeholder-gray-400 transition resize-y focus:outline-none focus:ring-2 focus:ring-[#C0392B] focus:ring-offset-1
+              ${
+                presenca !== "Sim"
+                  ? "border-gray-200 text-gray-400 cursor-not-allowed"
+                  : "border-gray-300"
+              }`}
+            aria-disabled={presenca !== "Sim" || isSubmitting}
           />
         </label>
 
+        <hr className="my-4 border-t border-[#f7c6ce]" />
+
+        {/* Botão de envio */}
         <button
           type="submit"
           disabled={isSubmitting}
-          className={`bg-[#C0392B] text-white font-semibold py-3 px-8 rounded-lg shadow-md transition duration-300 ${
-            isSubmitting ? "opacity-60 cursor-not-allowed" : "hover:bg-[#992d24]"
-          }`}
+          className={`bg-gradient-to-r from-[#C0392B] to-[#992d24] text-white font-semibold py-3 px-8 rounded-lg shadow-md transition-transform duration-300 flex items-center justify-center gap-2
+            ${
+              isSubmitting
+                ? "opacity-60 cursor-not-allowed"
+                : "hover:from-[#992d24] hover:to-[#7f231a] hover:shadow-lg hover:scale-105 active:scale-95"
+            }`}
+          aria-live="polite"
         >
-          {isSubmitting ? "Enviando..." : "Enviar"}
+          {isSubmitting ? (
+            "Enviando..."
+          ) : (
+            <>
+              <Send className="w-5 h-5" />
+              Enviar
+            </>
+          )}
         </button>
       </form>
 
+      {/* Mensagem final */}
       {status && (
         <p
-          className={`mt-8 max-w-md mx-auto flex items-center justify-center gap-2 font-semibold text-lg ${
-            status.error ? "text-red-600" : "text-green-600"
-          }`}
+          className={`mt-8 max-w-md mx-auto flex items-center justify-center gap-2 font-semibold text-lg animate-fadeIn select-none
+            ${status.error ? "text-red-600" : "text-green-600"}`}
           role="alert"
+          aria-live="assertive"
         >
           {status.error ? (
             <AlertTriangle className="w-6 h-6" />
