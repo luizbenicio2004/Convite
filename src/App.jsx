@@ -1,9 +1,11 @@
+// ... (importações mantidas)
 import React, { useRef, useState, useEffect } from "react";
 import RSVP from "./components/RSVP";
 import Location from "./components/Location";
 import GiftList from "./components/GiftList";
 import { Gift, MapPin, Heart, CalendarDays, Menu, X } from "lucide-react";
 
+// Componente do contador mantido como está
 function CountdownFriendly() {
   const weddingDate = new Date("2025-09-28T17:00:00");
   const [timeLeft, setTimeLeft] = useState(getTimeLeft());
@@ -28,23 +30,24 @@ function CountdownFriendly() {
   }, []);
 
   return (
-    <div className="countdown-inline mt-2 max-w-[380px] mx-auto text-white font-semibold select-none whitespace-nowrap">
-      ⌛️{" "}
-      {timeLeft.days === 0 &&
-      timeLeft.hours === 0 &&
-      timeLeft.minutes === 0 &&
-      timeLeft.seconds === 0 ? (
-        <span>O grande dia chegou! 🎉</span>
-      ) : (
-        <span>
-          Faltam <strong>{timeLeft.days} dias</strong>,{" "}
-          <strong>{timeLeft.hours} horas</strong>,{" "}
-          <strong>{timeLeft.minutes} minutos</strong> e{" "}
-          <strong>{timeLeft.seconds} segundos</strong> para o nosso grande dia!
-        </span>
-      )}
-    </div>
-  );
+  <div className="mt-4 text-center text-[#C0392B] font-semibold text-lg max-w-md mx-auto px-4">
+    ⌛️{" "}
+    {timeLeft.days === 0 &&
+    timeLeft.hours === 0 &&
+    timeLeft.minutes === 0 &&
+    timeLeft.seconds === 0 ? (
+      <span>O grande dia chegou! 🎉</span>
+    ) : (
+      <span>
+        Faltam <strong>{timeLeft.days}d</strong>,{" "}
+        <strong>{timeLeft.hours}h</strong>,{" "}
+        <strong>{timeLeft.minutes}m</strong> e{" "}
+        <strong>{timeLeft.seconds}s</strong> para o nosso grande dia!
+      </span>
+    )}
+  </div>
+);
+
 }
 
 export default function App() {
@@ -53,23 +56,12 @@ export default function App() {
   const [activeSection, setActiveSection] = useState("rsvp");
   const [showTopBtn, setShowTopBtn] = useState(false);
   const [zoomed, setZoomed] = useState(false);
-
-  // Estado para controlar menu aberto no mobile
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const toggleZoom = () => {
-    setZoomed(!zoomed);
-  };
+  const toggleZoom = () => setZoomed(!zoomed);
+  const toggleMenu = () => setMenuOpen(!menuOpen);
+  const handleNavClick = () => setMenuOpen(false);
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
-
-  const handleNavClick = () => {
-    setMenuOpen(false);
-  };
-
-  // Bloquear scroll no body quando menu estiver aberto
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "auto";
   }, [menuOpen]);
@@ -78,9 +70,7 @@ export default function App() {
     if (navRef.current) setNavHeight(navRef.current.offsetHeight);
     const handleResize = () => {
       if (navRef.current) setNavHeight(navRef.current.offsetHeight);
-      if (window.innerWidth >= 768) {
-        setMenuOpen(false);
-      }
+      if (window.innerWidth >= 768) setMenuOpen(false);
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -93,9 +83,7 @@ export default function App() {
       let current = "rsvp";
       for (const id of sections) {
         const el = document.getElementById(id);
-        if (el && el.offsetTop <= scrollPos) {
-          current = id;
-        }
+        if (el && el.offsetTop <= scrollPos) current = id;
       }
       setActiveSection(current);
       setShowTopBtn(window.scrollY > 300);
@@ -117,13 +105,12 @@ export default function App() {
   return (
     <div className="min-h-screen bg-white flex justify-center items-start py-10 px-4 font-sans leading-relaxed">
       <div className="relative w-full max-w-4xl bg-white rounded-3xl shadow-2xl border border-[#f7c6ce] overflow-x-hidden">
-        {/* Navegação */}
+        {/* NAV */}
         <nav
           ref={navRef}
           className="fixed top-0 left-0 right-0 z-50 bg-[#C0392B] text-white py-3 px-4 sm:px-8 shadow-lg border-b border-[#f7c6ce] flex items-center justify-between"
         >
           <div className="font-semibold text-lg select-none">Nosso Casamento</div>
-
           <button
             onClick={toggleMenu}
             className="md:hidden text-white p-2 rounded-md hover:bg-[#992d24] focus:outline-none focus:ring-2 focus:ring-white"
@@ -134,21 +121,18 @@ export default function App() {
           </button>
 
           <div
-            className={`flex-col md:flex-row md:flex items-center gap-6 absolute md:static top-full left-0 w-full md:w-auto bg-[#C0392B] md:bg-transparent transition-transform duration-300 ease-in-out
-              ${
-                menuOpen
-                  ? "translate-y-0 opacity-100 pointer-events-auto"
-                  : "opacity-0 -translate-y-10 pointer-events-none md:pointer-events-auto"
-              }
-              md:opacity-100 md:translate-y-0
-            `}
+            className={`flex-col md:flex-row md:flex items-center gap-6 absolute md:static top-full left-0 w-full md:w-auto bg-[#C0392B] md:bg-transparent transition-transform duration-300 ease-in-out ${
+              menuOpen
+                ? "translate-y-0 opacity-100 pointer-events-auto"
+                : "opacity-0 -translate-y-10 pointer-events-none md:pointer-events-auto"
+            } md:opacity-100 md:translate-y-0`}
           >
             {navItems.map(({ id, icon: Icon, label }) => (
               <a
                 key={id}
                 href={`#${id}`}
                 onClick={handleNavClick}
-                className={`flex items-center gap-2 px-4 py-2 rounded-md cursor-pointer text-white md:text-white select-none transition ${
+                className={`flex items-center gap-2 px-4 py-2 rounded-md cursor-pointer text-white transition ${
                   activeSection === id
                     ? "bg-[#992d24] shadow-md"
                     : "hover:bg-[#992d24]"
@@ -158,26 +142,22 @@ export default function App() {
                 {label}
               </a>
             ))}
-
-            <div className="mt-4 md:mt-0 md:ml-6">
-              <CountdownFriendly />
-            </div>
           </div>
         </nav>
 
-        {/* Conteúdo */}
-        <main
-          style={{ paddingTop: `${navHeight + 24}px` }}
-          className="px-8 py-20"
-        >
-          <div className="flex justify-center mb-16">
+        {/* CONTEÚDO */}
+        <main style={{ paddingTop: `${navHeight + 24}px` }} className="px-8 py-20">
+          {/* IMAGEM FLORAL TOPO */}
+          <div className="flex justify-center mb-4">
             <img
               src="/flores.jpeg"
               alt="Flores"
-              className="w-40 h-auto rounded-xl drop-shadow-lg opacity-90 mix-blend-multiply"
-              style={{ filter: "none" }}
+              className="mx-auto w-32 sm:w-40 rounded-xl object-cover ring-[#f7c6ce] transition-transform duration-500 hover:scale-105"
             />
           </div>
+
+          {/* CONTADOR MOVIDO PARA AQUI */}
+          <CountdownFriendly />
 
           <header className="text-center mb-20 animate-fadeSlideUp">
             <h1 className="font-serif text-6xl text-[#C0392B] mb-6">
@@ -191,19 +171,18 @@ export default function App() {
             </p>
 
             <div className="mb-10">
-              <a
-                href={calendarLink}
-                target="_blank"
-                rel="noopener noreferrer"
+            <a
+                href="/evento.ics"
+                download="casamento-gabriela-e-luiz.ics"
                 className="inline-flex items-center gap-2 bg-gradient-to-r from-[#C0392B] to-[#992d24] text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-transform duration-300"
               >
-                <CalendarDays className="w-5 h-5" /> Salvar no calendário
+                <CalendarDays className="w-5 h-5" />
+                Salvar no calendário
               </a>
             </div>
 
             <blockquote className="italic text-black text-2xl max-w-xl mx-auto mb-14 font-semibold tracking-wide leading-relaxed">
-              "Quanto ao nosso acordo, o SENHOR é testemunha entre mim e você
-              para sempre"
+              "Quanto ao nosso acordo, o SENHOR é testemunha entre mim e você para sempre"
             </blockquote>
 
             <img
@@ -214,61 +193,48 @@ export default function App() {
               }`}
               onClick={toggleZoom}
               title="Clique para ampliar"
-              aria-label={zoomed ? "Fechar imagem ampliada" : "Ampliar imagem"}
               role="button"
               tabIndex={0}
               onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  toggleZoom();
-                }
+                if (e.key === "Enter" || e.key === " ") toggleZoom();
               }}
             />
 
             <p className="text-lg italic text-gray-600 max-w-2xl mx-auto mt-10 leading-relaxed tracking-wide">
               Teremos a alegria de receber a bênção dos nossos amados pastores,
-              Eliseu Silvério e Shirley Silvério, que estarão conosco nesse dia
-              tão especial para celebrar o amor e a fidelidade de Deus.
+              Eliseu Silvério e Shirley Silvério, que estarão conosco nesse dia tão especial para celebrar o amor e a fidelidade de Deus.
             </p>
           </header>
 
-          <section
-            id="rsvp"
-            className="mb-28 animate-fadeSlideUp"
-            style={{ animationDelay: "0.2s" }}
-          >
+          {/* Seções */}
+          <section id="rsvp" className="mb-28 animate-fadeSlideUp" style={{ animationDelay: "0.2s" }}>
             <RSVP />
           </section>
 
-          <section
-            id="presentes"
-            className="mb-28 animate-fadeSlideUp"
-            style={{ animationDelay: "0.4s" }}
-          >
+          <section id="presentes" className="mb-28 animate-fadeSlideUp" style={{ animationDelay: "0.4s" }}>
             <GiftList />
           </section>
 
-          <section
-            id="local"
-            className="mb-28 animate-fadeSlideUp"
-            style={{ animationDelay: "0.6s" }}
-          >
+          <section id="local" className="mb-28 animate-fadeSlideUp" style={{ animationDelay: "0.6s" }}>
             <Location />
           </section>
 
-          <div className="flex justify-center mt-24 mb-14">
+          {/* MENSAGEM FINAL (MOVIDA PARA CIMA DA IMAGEM INFERIOR) */}
+          <footer className="text-gray-600 text-xl font-semibold text-center tracking-wide mb-10">
+            Com carinho, aguardamos você no nosso grande dia! 💍
+          </footer>
+
+          {/* IMAGEM FLORAL INFERIOR */}
+          <div className="flex justify-center mt-2 mb-10">
             <img
               src="/flores.jpeg"
               alt="Flores rodapé"
-              className="w-40 h-auto rounded-xl drop-shadow-lg rotate-180 opacity-90 mix-blend-multiply"
-              style={{ filter: "none" }}
+              className="mx-auto w-32 sm:w-40 rounded-xl object-cover ring-[#f7c6ce] transition-transform duration-500 hover:scale-105"
             />
           </div>
-
-          <footer className="text-gray-600 text-xl mb-12 font-semibold text-center tracking-wide">
-            Com carinho, aguardamos você no nosso grande dia! 💍
-          </footer>
         </main>
 
+        {/* Botão "Voltar ao topo" */}
         {showTopBtn && (
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}

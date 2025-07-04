@@ -25,10 +25,10 @@ export default function Location() {
 
       <div className="flex justify-center mb-8">
         <a
-          href="https://www.google.com/maps/place/Foto+Fest+-+Rua+Tereza,+489,+Calmon+Viana,+Poá+-+SP"
+          href="https://www.google.com/maps?q=-23.53224,-46.33642"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 bg-vermelho text-white font-semibold px-6 py-3 rounded-full shadow-lg hover:bg-[#992d24] transition transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-vermelho/40"
+          className="inline-flex items-center gap-2 bg-vermelho text-white font-semibold px-6 py-3 rounded-full shadow-lg hover:bg-[#992d24] transition transform hover:scale-105"
           aria-label="Abrir local no Google Maps"
           title="Abrir no Google Maps"
         >
@@ -39,7 +39,7 @@ export default function Location() {
       <div className="overflow-hidden rounded-3xl shadow-3xl aspect-video border border-[#f7c6ce] ring-1 ring-[#f7c6ce]/60">
         <iframe
           title="Mapa da Cerimônia"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3655.130000000000!2d-46.40980000000001!3d-23.525400000000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cf90d43ef6a8df%3A0x70b123456789abcd!2sFoto%20Fest!5e0!3m2!1spt-BR!2sbr!4v1697815123456!5m2!1spt-BR!2sbr"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3658.007302011073!2d-46.33641992544758!3d-23.53223977881983!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce7aee28892807%3A0x2ba9241f5764477f!2sRua%20Tereza%2C%20489%20-%20Calmon%20Viana%2C%20Po%C3%A1%20-%20SP%2C%2008560-200!5e0!3m2!1spt-BR!2sbr!4v1751600046427!5m2!1spt-BR!2sbr"
           className="w-full h-full border-0 rounded-3xl"
           allowFullScreen
           loading="lazy"

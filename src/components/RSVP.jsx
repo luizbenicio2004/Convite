@@ -109,24 +109,55 @@ export default function RSVP() {
           )}
         </label>
 
-        {/* Presença */}
-        <label className="block">
-          <span className="block mb-1 font-medium text-gray-900">Vai comparecer?</span>
-          <select
-            value={presenca}
-            onChange={(e) => setPresenca(e.target.value)}
-            disabled={isSubmitting}
-            className="w-full p-3 border border-gray-300 rounded-md bg-transparent text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#C0392B] focus:ring-offset-1 transition"
-            required
-            aria-invalid={status?.error && !presenca}
-          >
-            <option value="" disabled>
-              -- Selecione --
-            </option>
-            <option value="Sim">Sim</option>
-            <option value="Não">Não</option>
-          </select>
-        </label>
+        {/* Presença (estilizada com botões) */}
+        <div className="block">
+          <span className="block mb-2 font-medium text-gray-900">
+            Vai comparecer?
+          </span>
+
+          <div className="flex gap-4 mb-3">
+            <button
+              type="button"
+              onClick={() => setPresenca("Sim")}
+              disabled={isSubmitting}
+              className={`flex-1 py-2 px-4 rounded-lg text-center font-semibold border transition-all duration-300
+                ${
+                  presenca === "Sim"
+                    ? "bg-[#C0392B] text-white border-[#C0392B] shadow-md"
+                    : "bg-white text-[#C0392B] border-[#C0392B] hover:bg-[#fcebea]"
+                }`}
+            >
+              Sim
+            </button>
+            <button
+              type="button"
+              onClick={() => setPresenca("Não")}
+              disabled={isSubmitting}
+              className={`flex-1 py-2 px-4 rounded-lg text-center font-semibold border transition-all duration-300
+                ${
+                  presenca === "Não"
+                    ? "bg-yellow-500 text-white border-yellow-500 shadow-md"
+                    : "bg-white text-yellow-700 border-yellow-500 hover:bg-yellow-50"
+                }`}
+            >
+              Não
+            </button>
+          </div>
+
+          {/* Mensagem interativa */}
+          {presenca === "Sim" && (
+            <div className="flex items-center gap-2 text-green-700 text-sm font-medium bg-green-50 border border-green-200 rounded-md p-2">
+              <CheckCircle2 className="w-4 h-4" />
+              Que alegria! Estamos felizes com sua presença 💖
+            </div>
+          )}
+          {presenca === "Não" && (
+            <div className="flex items-center gap-2 text-yellow-800 text-sm font-medium bg-yellow-50 border border-yellow-200 rounded-md p-2">
+              <AlertTriangle className="w-4 h-4" />
+              Que pena! Sentiremos sua falta 😢
+            </div>
+          )}
+        </div>
 
         {/* Acompanhantes */}
         <label className="block">
