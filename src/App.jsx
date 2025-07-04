@@ -30,23 +30,23 @@ function CountdownFriendly() {
   }, []);
 
   return (
-  <div className="mt-4 text-center text-[#C0392B] font-semibold text-lg max-w-md mx-auto px-4">
-    ⌛️{" "}
-    {timeLeft.days === 0 &&
-    timeLeft.hours === 0 &&
-    timeLeft.minutes === 0 &&
-    timeLeft.seconds === 0 ? (
-      <span>O grande dia chegou! 🎉</span>
-    ) : (
-      <span>
-        Faltam <strong>{timeLeft.days}d</strong>,{" "}
-        <strong>{timeLeft.hours}h</strong>,{" "}
-        <strong>{timeLeft.minutes}m</strong> e{" "}
-        <strong>{timeLeft.seconds}s</strong> para o nosso grande dia!
-      </span>
-    )}
-  </div>
-);
+    <div className="mb-10 text-center text-black font-semibold text-lg max-w-md mx-auto px-4">
+      ⌛️{" "}
+      {timeLeft.days === 0 &&
+      timeLeft.hours === 0 &&
+      timeLeft.minutes === 0 &&
+      timeLeft.seconds === 0 ? (
+        <span>O grande dia chegou! 🎉</span>
+      ) : (
+        <span>
+          Faltam <strong>{timeLeft.days}d</strong>,{" "}
+          <strong>{timeLeft.hours}h</strong>,{" "}
+          <strong>{timeLeft.minutes}m</strong> e{" "}
+          <strong>{timeLeft.seconds}s</strong> para o nosso grande dia!
+        </span>
+      )}
+    </div>
+  );
 
 }
 

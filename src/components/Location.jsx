@@ -25,7 +25,7 @@ export default function Location() {
 
       <div className="flex justify-center mb-8">
         <a
-          href="https://www.google.com/maps?q=-23.53224,-46.33642"
+          href="https://www.google.com/maps/place/Rua+Tereza,+489+-+Calmon+Viana,+Poá+-+SP,+08560-200"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 bg-vermelho text-white font-semibold px-6 py-3 rounded-full shadow-lg hover:bg-[#992d24] transition transform hover:scale-105"
