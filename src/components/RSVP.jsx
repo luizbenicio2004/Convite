@@ -66,8 +66,8 @@ export default function RSVP() {
       <div className="flex items-center gap-3 bg-red-50 border border-red-300 text-red-700 p-4 rounded-lg text-sm mb-8 select-none">
         <AlertTriangle className="w-6 h-6 flex-shrink-0 text-red-500" />
         <p>
-          Por favor, confirme sua presença até o dia{" "}
-          <span className="font-semibold">10 de setembro</span>.
+          Por favor, confirme agora a sua presença.{" "}
+          <span className="font-semibold"></span>.
         </p>
       </div>
 
