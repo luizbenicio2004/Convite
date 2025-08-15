@@ -67,7 +67,7 @@ export default function RSVP() {
         <AlertTriangle className="w-6 h-6 flex-shrink-0 text-red-500" />
         <p>
           Por favor, confirme agora a sua presença.{" "}
-          <span className="font-semibold"></span>.
+          <span className="font-semibold"></span>
         </p>
       </div>
 
